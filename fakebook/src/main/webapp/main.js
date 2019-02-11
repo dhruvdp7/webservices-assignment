@@ -5,8 +5,6 @@ function init() {
     btn1.addEventListener('click', addBtn1Click);
     btn2 = document.querySelector('#getbutton');
     btn2.addEventListener('click', addBtn2Click);
-    btn3 = document.querySelector('#getallbutton');
-    btn3.addEventListener('click', addBtn3Click);
 }
 function addBtn1Click(){
 	
@@ -45,9 +43,28 @@ function addBtn1Click(){
 	main.appendChild(comment_container);
 }
 function addBtn2Click(){
+	$(".comment").remove();
+	var comment_container=document.createElement('div');
+	var form=document.createElement("form");
+	var email_container=document.createElement('div');
+	var email=document.createElement('input');
+	var submit_container=document.createElement('div');
+	var submit=document.createElement('input');
 	
-
+	form.setAttribute('action','webapi/comment/getcomment');
+	form.setAttribute('method','post');
+	email.setAttribute('type','email');
+	email.setAttribute('name','email');
+	email.setAttribute('placeholder','Enter Email Address');
+	submit.setAttribute('type','submit');
+	submit.setAttribute('value','Search Comment');
 	
+	form.appendChild(email_container);
+	email_container.appendChild(email);
+	form.appendChild(submit_container);
+	submit_container.appendChild(submit);
+	comment_container.appendChild(form);
+	main.appendChild(comment_container);
 
 }
 

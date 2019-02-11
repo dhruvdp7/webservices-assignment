@@ -16,12 +16,11 @@ import javax.ws.rs.core.Response;
 public class Signup {
 	
 	@POST
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_HTML)
 	public Response signup(@FormParam("fname") String fname,@FormParam("lname") String lname,@FormParam("email") String email, @FormParam("password") String password) throws URISyntaxException{
 		try{  
     		Class.forName("com.mysql.jdbc.Driver");  
-    		Connection con=DriverManager.getConnection(  
-    		"jdbc:mysql://localhost:3306/fakebook","root","root");  
+    		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/fakebook","root","root");  
     		  
     		PreparedStatement ps=con.prepareStatement("insert into information values(?,?,?,?,?)");  
     		
@@ -34,11 +33,16 @@ public class Signup {
     		ps.executeUpdate();
     		
     		System.out.println("Registered");
-    		con.close();  
+    		con.close(); 
+    		
+    		
+    		
     		}catch(Exception e){ System.out.println(e);}  
-    		  
-    	URI location = new URI("http://localhost:8080/fakebook/index.html");
-    	return Response.seeOther(location).build(); 
+		String output="<h1>Signup Successful</h1><br><br>"
+				+ " <a href='http://localhost:8080/fakebook/login.html'>Click here</a> to login.";
+		
+		URI location = new URI("http://localhost:8080/fakebook/signup.html");
+		return Response.status(200).entity(output).build();
     	}
 	
 	

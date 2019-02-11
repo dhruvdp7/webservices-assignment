@@ -15,9 +15,11 @@ import java.sql.*;
 public class Login {
 	
 	@POST
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_HTML)
 	public Response login(@FormParam("email") String email,@FormParam("password") String password) throws URISyntaxException{
+		String output="";
 		try{  
+			
     		Class.forName("com.mysql.jdbc.Driver");
     		System.out.println("connecting to database.....");
     		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/fakebook","root","root");    
@@ -33,6 +35,12 @@ public class Login {
     		    	return Response.seeOther(location).build(); 
     		    	
     			}
+    			else {
+    				
+    				output="<h1>INCORRECT USER NAME OR PASSWORD.</h1><br><br>"
+    						+ " <a href='http://localhost:8080/fakebook/login.html'>Click here</a> to login again";
+    				
+    			}
     			
     			
     		}
@@ -40,7 +48,7 @@ public class Login {
     		}catch(Exception e){ System.out.println(e);}  
     	
 		URI location = new URI("http://localhost:8080/fakebook/login.html");
-    	return Response.seeOther(location).build();
+		return Response.status(401).entity(output).build();
     	}
 	
 
