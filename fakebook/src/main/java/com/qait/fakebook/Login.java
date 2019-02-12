@@ -21,7 +21,7 @@ public class Login {
 		String output = "";
 
 		try {
-			//DATABASE-CONNECTION
+			// DATABASE-CONNECTION
 			Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("connecting to database.....");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/fakebook", "root", "root");
@@ -36,13 +36,6 @@ public class Login {
 					URI location = new URI("http://localhost:8080/fakebook/home.html");
 
 					return Response.seeOther(location).build();
-
-				} else {
-					System.out.println("found");
-
-					output = "<html></body>" + "<h1>INCORRECT USER NAME OR PASSWORD.</h1><br><br>"
-							+ " <a href='http://localhost:8080/fakebook/login.html'>Click here</a> to login again"
-							+ "</body></html>";
 
 				}
 

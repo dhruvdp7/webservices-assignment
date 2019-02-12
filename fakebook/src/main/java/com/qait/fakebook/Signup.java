@@ -20,17 +20,16 @@ public class Signup {
 	public Response signup(@FormParam("fname") String fname, @FormParam("lname") String lname,
 			@FormParam("email") String email, @FormParam("password") String password) throws URISyntaxException {
 		try {
-			//DATABASE-CONNECTION
+			// DATABASE-CONNECTION
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/fakebook", "root", "root");
 
-			PreparedStatement ps = con.prepareStatement("insert into information values(?,?,?,?,?)");
+			PreparedStatement ps = con.prepareStatement("insert into information values(?,?,?,?)");
 
 			ps.setString(1, fname);
 			ps.setString(2, lname);
 			ps.setString(3, password);
 			ps.setString(4, email);
-			ps.setString(5, "");
 
 			ps.executeUpdate();
 

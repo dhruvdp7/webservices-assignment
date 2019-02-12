@@ -31,9 +31,9 @@ import javax.ws.rs.core.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**This class contains three different methods. 
- * AddComment method for adding a comment 
- * GetComment method for getting comment of a particular user
+/**
+ * This class contains three different methods. AddComment method for adding a
+ * comment GetComment method for getting comment of a particular user
  * GetAllComments method for getting all the comments.
  */
 
@@ -52,15 +52,16 @@ public class Comment {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response AddComment(@FormParam("comment") String comment, @FormParam("email") String email)
 			throws URISyntaxException {
+
 		try {
 			// DATABASE-CONNECTION
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/fakebook", "root", "root");
 
-			PreparedStatement ps = con.prepareStatement("update information set comment = ? where email = ?");
+			PreparedStatement ps = con.prepareStatement("insert into comment values (?,?)");
 
-			ps.setString(1, comment);
-			ps.setString(2, email);
+			ps.setString(1, email);
+			ps.setString(2, comment);
 
 			ps.executeUpdate();
 
@@ -74,7 +75,6 @@ public class Comment {
 		return Response.seeOther(location).build();
 
 	}
-	
 
 	/**
 	 * This service will fetch a comment of the person from the database whose email
@@ -99,15 +99,16 @@ public class Comment {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/fakebook", "root", "root");
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select email, comment from information where email='" + email + "'");
-			JSONObject jobj = new JSONObject();
+			ResultSet rs = stmt.executeQuery("select email, comment from comment where email='" + email + "'");
+
 			while (rs.next()) {
+				JSONObject jobj = new JSONObject();
 				email = rs.getString(1);
 				comment = rs.getString(2);
+				jobj.put("email", email);
+				jobj.put("comment", comment);
+				jarray.put(jobj);
 			}
-			jobj.put("email", email);
-			jobj.put("comment", comment);
-			jarray.put(jobj);
 
 			usercomment.put("comment", jarray);
 
@@ -118,8 +119,6 @@ public class Comment {
 		return Response.status(200).entity(usercomment.toString()).build();
 
 	}
-	
-	
 
 	/**
 	 * This service will fetch all comments from the database and sends the response
@@ -142,7 +141,7 @@ public class Comment {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/fakebook", "root", "root");
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select email, comment from information");
+			ResultSet rs = stmt.executeQuery("select email, comment from comment");
 			while (rs.next()) {
 
 				JSONObject jobj = new JSONObject();
