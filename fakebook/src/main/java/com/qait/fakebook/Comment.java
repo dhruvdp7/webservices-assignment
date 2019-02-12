@@ -57,117 +57,121 @@ public class Comment {
 	
 	
 
-	@POST
-    @Path("getcomment")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_JSON)
-
-	public String getComment(@FormParam("email") String email) throws URISyntaxException{
-		JSONObject jsonObject;
-		String output="";
-		String comment="";
-		
-		try{  
-    		Class.forName("com.mysql.jdbc.Driver");  
-    		Connection con=DriverManager.getConnection(  
-    		"jdbc:mysql://localhost:3306/fakebook","root","root");  
-    		Statement stmt=con.createStatement();  
-    		ResultSet rs=stmt.executeQuery("select email, comment from information where email='"+email+"'");
-    	
-    		while(rs.next())  
-    		{
-    			email= rs.getString(1); 
-    			comment=rs.getString(2);
-    		}
-    		
-		
-		
-	}
-		catch(Exception e) {
-		System.out.println(e);	
-		}
-		output=String.format("{'email': %s, 'comment':%s}", email,comment);
-		jsonObject=new JSONObject(output);
-		return jsonObject.toString();
-		
-	}
-	
-	
-	
 //	@POST
 //    @Path("getcomment")
-//    @Produces(MediaType.TEXT_HTML)
-//    public Response getComment(@FormParam("email") String email) throws URISyntaxException {
-//    	String output = "";
-//    	try{  
+//	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+//    @Produces(MediaType.APPLICATION_JSON)
+//
+//	public String getComment(@FormParam("email") String email) throws URISyntaxException{
+//		JSONObject jsonObject;
+//		String output="";
+//		String comment="";
+//		
+//		try{  
 //    		Class.forName("com.mysql.jdbc.Driver");  
 //    		Connection con=DriverManager.getConnection(  
 //    		"jdbc:mysql://localhost:3306/fakebook","root","root");  
 //    		Statement stmt=con.createStatement();  
-//    		ResultSet rs=stmt.executeQuery("select comment, email from information where email='"+email+"'");
+//    		ResultSet rs=stmt.executeQuery("select email, comment from information where email='"+email+"'");
 //    	
 //    		while(rs.next())  
 //    		{
-//    			output ="<b>Comment:</b> "+ rs.getString(1)+"<b> By:</b> " +rs.getString(2)+"";
+//    			email= rs.getString(1); 
+//    			comment=rs.getString(2);
 //    		}
-//    		con.close();
-//    		return Response.status(200).entity(output).build();	
-//    		}
-//    	catch(Exception e){ System.out.println(e);
-//    	}	
-//    	URI location = new URI("http://localhost:8080/fakebook/home.html");
-//    	return Response.seeOther(location).build(); 
-//    	}
+//    		
+//		
+//		
+//	}
+//		catch(Exception e) {
+//		System.out.println(e);	
+//		}
+//		output=String.format("{'email': %s, 'comment':%s}", email,comment);
+//		jsonObject=new JSONObject(output);
+//		return jsonObject.toString();
+//		
+//	}
 	
 	
 	
-	@GET
-	@Path("getallcomments")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.APPLICATION_JSON)
-	public String getAllComments() throws URISyntaxException{
-		JSONObject jsonObject=new JSONObject();
-		
-		String comments="";
-	
-		try{  
+	@POST
+    @Path("getcomment")
+    @Produces(MediaType.TEXT_HTML)
+    public Response getComment(@FormParam("email") String email) throws URISyntaxException {
+    	String output = "";
+    	try{  
     		Class.forName("com.mysql.jdbc.Driver");  
     		Connection con=DriverManager.getConnection(  
     		"jdbc:mysql://localhost:3306/fakebook","root","root");  
     		Statement stmt=con.createStatement();  
-    		ResultSet rs=stmt.executeQuery("select email, comment from information"); 
-    		while(rs.next()) {
-    			
-    			
-		comments=String.format("{comments: [ { 'email' %s, 'comment': %s }]}",rs.getString(1),rs.getString(2));}}
-    		catch(Exception e){ System.out.println(e);
-      	}
-		//jsonObject=new JSONObject(comments);
-		return jsonObject.toString();	
-	}
-		
+    		ResultSet rs=stmt.executeQuery("select comment, email from information where email='"+email+"'");
+    		
+    		while(rs.next())  
+    		{
+    			System.out.println("got");
+    			output +="<b>Comment:</b> "+ rs.getString(1)+"<b><br> By:</b> " +rs.getString(2)+"";
+    		}
+    		
+    		con.close();
+    		return Response.status(200).entity(output).build();	
+    		}
+    	catch(Exception e){ System.out.println(e);
+    	}	
+    	URI location = new URI("http://localhost:8080/fakebook/home.html");
+    	return Response.seeOther(location).build(); 
+    	}
+	
+	
 	
 //	@GET
-//    @Path("getallcomments")
-//    @Produces(MediaType.TEXT_HTML)
-//    public Response getAllComments() throws URISyntaxException {
-//    	String output = "";
-//    	try{  
+//	@Path("getallcomments")
+//	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public String getAllComments() throws URISyntaxException{
+//		JSONObject jsonObject=new JSONObject();
+//		
+//		String comments="";
+//	
+//		try{  
 //    		Class.forName("com.mysql.jdbc.Driver");  
 //    		Connection con=DriverManager.getConnection(  
 //    		"jdbc:mysql://localhost:3306/fakebook","root","root");  
 //    		Statement stmt=con.createStatement();  
-//    		ResultSet rs=stmt.executeQuery("select comment, email from information");  
-//    		while(rs.next())  
-//    		{
-//    			output += "<b>Comment:</b>"+ rs.getString(1)+"<br><b>By:</b>" +rs.getString(2)+ "<br><br><br><br>";
-//    		}
-//    		con.close();
-//    		return Response.status(200).entity(output).build();	
-//    		}
-//    	catch(Exception e){ System.out.println(e);
-//    	}
-//    	URI location = new URI("http://localhost:8080/fakebook/home.html");
-//    	return Response.seeOther(location).build(); 
-//    	}
+//    		ResultSet rs=stmt.executeQuery("select email, comment from information"); 
+//    		while(rs.next()) {
+//    			
+//    			
+//		comments=String.format("{comments: [ { 'email' %s, 'comment': %s }]}",rs.getString(1),rs.getString(2));}}
+//    		catch(Exception e){ System.out.println(e);
+//      	}
+//		//jsonObject=new JSONObject(comments);
+//		return jsonObject.toString();	
+//	}
+		
+	
+	@GET
+    @Path("getallcomments")
+    @Produces(MediaType.TEXT_HTML)
+    public Response getAllComments() throws URISyntaxException {
+    	String output = "";
+    	try{  
+    		Class.forName("com.mysql.jdbc.Driver");  
+    		Connection con=DriverManager.getConnection(  
+    		"jdbc:mysql://localhost:3306/fakebook","root","root");  
+    		Statement stmt=con.createStatement();  
+    		ResultSet rs=stmt.executeQuery("select comment, email from information");
+    		output="<html><body>";
+    		while(rs.next())  
+    		{
+    			output += "<b>Comment:</b>"+ rs.getString(1)+"<br><b>By:</b>" +rs.getString(2)+ "<br><br><br><br>";
+    		}
+    		output +="</body></html>";
+    		con.close();
+    		return Response.status(200).entity(output).build();	
+    		}
+    	catch(Exception e){ System.out.println(e);
+    	}
+    	URI location = new URI("http://localhost:8080/fakebook/home.html");
+    	return Response.seeOther(location).build(); 
+    	}
 }

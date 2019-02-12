@@ -38,8 +38,10 @@ public class Signup {
     		
     		
     		}catch(Exception e){ System.out.println(e);}  
-		String output="<h1>Signup Successful</h1><br><br>"
-				+ " <a href='http://localhost:8080/fakebook/login.html'>Click here</a> to login.";
+		String output="<html><body>"
+				+ "<h1>Signup Successful</h1><br><br>"
+				+ " <a href='http://localhost:8080/fakebook/login.html'>Click here</a> to login."
+				+ "</body></html>";
 		
 		URI location = new URI("http://localhost:8080/fakebook/signup.html");
 		return Response.status(200).entity(output).build();
