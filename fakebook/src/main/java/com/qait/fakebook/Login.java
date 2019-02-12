@@ -36,7 +36,7 @@ public class Login {
     				URI location = new URI("http://localhost:8080/fakebook/home.html");
     				
     		    	return Response.seeOther(location).build();
-    		    	
+    		    		
     			}
 //    			else {
 //    				System.out.println("found");

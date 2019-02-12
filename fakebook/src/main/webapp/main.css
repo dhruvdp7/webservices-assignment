@@ -21,6 +21,7 @@
 	.heading{
 	
 		text-align:center;
+		padding-bottom:30px;
 	}
 	
 	.button-container
@@ -32,6 +33,7 @@
 	button
 	{
 		margin-right:20px;
+		
 	}
 	
 	.main-signup{
@@ -52,13 +54,13 @@
 	
 	.name{
 	display:flex;
-	padding:20px;
+	
 	
 	}
 	.fname{
 	flex-grow: 1;
 	padding 20px;
-;
+
 	}
 	.lname{
 	flex-grow: 1;
@@ -67,16 +69,38 @@
 	.email{
 	width:100%;
 	margin:10px;
+	font-size: 20px;
 	
+	}
+	.text{
+	font-size: 20px;
+	margin:15px;
 	}
 	.password
 	{
+		font-size: 20px;
 		width:100%;
 		margin:10px;
+		margin-bottom:30px;
 	}
-	.submit{
+	.login{
 	margin:10px;
 	width:100%;
+	font-size: 25px;
+	letter-spacing: 2px;  	
+	background: #92B558;
+	padding:8px;
+	border-radius: 6px;
+	
+	}
+	.signup{
+	margin:10px;
+	width:100%;
+	font-size: 25px;
+	letter-spacing: 2px;  	
+	background: #95DEE3;
+	padding:8px;
+	border-radius: 6px;
 	
 	}
 	.text{
@@ -121,6 +145,21 @@
 	
     background: linear-gradient(to bottom, #ccffff 0%, #ff99cc 100%);
 
+	
+	}
+	.btn{
+		margin:10px;
+	width:100%;
+	font-size: 25px;
+	letter-spacing: 2px;  	
+	background: #91A8D0;
+	padding:8px;
+	border-radius: 6px;
+	
+	
+	}
+	.logo{
+	margin-left:10px;
 	
 	}
 	
