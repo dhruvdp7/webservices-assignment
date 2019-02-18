@@ -3,6 +3,7 @@ package com.qait.fakebook;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,8 +14,11 @@ import java.sql.*;
 
 @Path("login")
 public class Login {
+	
+	public boolean islogin=false;
 
 	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_HTML)
 	public Response login(@FormParam("email") String email, @FormParam("password") String password)
 			throws URISyntaxException {
@@ -31,10 +35,10 @@ public class Login {
 			while (rs.next()) {
 
 				if (email.equals(rs.getString(1)) && password.equals(rs.getString(2))) {
-
+					islogin=true;
 					System.out.println("connected....");
 					URI location = new URI("http://localhost:8080/fakebook/home.html");
-
+					
 					return Response.seeOther(location).build();
 
 				}

@@ -110,7 +110,7 @@ public class Comment {
 				jarray.put(jobj);
 			}
 
-			usercomment.put("comment", jarray);
+			usercomment.put("comments", jarray);
 
 		} catch (Exception e) {
 			System.out.println(e);
